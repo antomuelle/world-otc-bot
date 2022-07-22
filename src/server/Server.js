@@ -1,6 +1,8 @@
 import express from 'express'
 import session from 'express-session'
 import crypto from 'crypto'
+import fs from 'fs'
+import https from 'https'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -16,7 +18,11 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-app.listen(PORT, ()=> { console.log('Server running on: http://localhost:' + PORT) })
+// app.listen(PORT, ()=> { console.log('Server running on: http://localhost:' + PORT) })
+https.createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/fullchain.pem')
+}, app).listen(443)
 
 app.get('/', (req, res)=> {
   if (req.session.user)

@@ -14,10 +14,9 @@ global._log = function(text) { console.log(text) }
 global.randInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
 
 global.STORE = JSON.parse(fs.readFileSync('./config.json')).store
-for (const key in STORE) {
+/* for (const key in STORE) {
   if (STORE.hasOwnProperty(key)) {
     (new MultiOtc(key, STORE[key])).login()
   }
-}
+} */
 import './src/server/Server.js'
-console.log(process.env.SECRET)
