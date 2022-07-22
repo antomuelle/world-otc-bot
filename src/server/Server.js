@@ -22,7 +22,7 @@ app.use(session({
 https.createServer({
   key: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/fullchain.pem')
-}, app).listen(443)
+}, app).listen(443, ()=> { console.log('Server running on: http://localhost:' + 443) })
 
 app.get('/', (req, res)=> {
   if (req.session.user)
