@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(session({
-  secret: 'g93bHabiln9VNYlEjar1a6FAsautmR0o',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true
 }))
