@@ -1,6 +1,7 @@
 import MultiOtc from "./src/MultiOtc.js"
 import fs from 'fs'
 import 'dotenv/config'
+import UFBCTT from "./src/UFBCTT.js"
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -21,3 +22,7 @@ for (const key in STORE) {
   }
 }
 import './src/server/Server.js'
+
+const credentials = { account: "927448868", password: "s0nsam0sha" }
+const app = new UFBCTT(credentials)
+app.login()

@@ -34,8 +34,8 @@ const runner = {
 }
 
 const credentials = {
-	mobile: '+51927448868',
-	password: 's0nsam0sha',
+	mobile: '',
+	password: '',
 	type: 'mobile'
 }
 
