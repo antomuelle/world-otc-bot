@@ -14,8 +14,9 @@ Object.prototype.ifHas = function(key, obj, opt_key = null) {
 global._log = function(text) { console.log(text) }
 global.randInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
 
-const config = JSON.parse(fs.readFileSync('./config.json'))
-global.STORE = config.store
+const CONFIG = JSON.parse(fs.readFileSync('./config.json'))
+
+global.STORE = CONFIG.store
 for (const key in STORE) {
   if (STORE.hasOwnProperty(key)) {
     (new MultiOtc(key, STORE[key])).login()
@@ -23,6 +24,6 @@ for (const key in STORE) {
 }
 import './src/server/Server.js'
 
-const credentials = { account: "927448868", password: "s0nsam0sha" }
+const credentials = CONFIG.ufb_client
 const app = new UFBCTT(credentials)
 app.login()
