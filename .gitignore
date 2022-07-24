@@ -1,5 +1,6 @@
 # Custon files
 config.json
+*.response.js
 
 # Logs
 logs

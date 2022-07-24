@@ -211,7 +211,7 @@ export default class UFBCTT {
       const response = await this.#_axios({
         url: START_MING,
         method: 'post',
-        data: { id: amount < 10 ? 1 : 2 }
+        data: { id: this.getLevel(amount).id }
       })
       console.log('Ming:', response.data)
     }
@@ -229,11 +229,14 @@ export default class UFBCTT {
   }
 
   getLevel(amount) {
-    for (let i = 0; i < LEVEL_LIST.length; i++) {
-      const element = LEVEL_LIST[i]
+    let index = 0
+    for (; index < LEVEL_LIST.length; index++) {
+      const element = LEVEL_LIST[index]
       const price = Number(element.principal)
-      // if (amount > price)
+      if (amount < price)
+        return (index-1) < 0 ? null : LEVEL_LIST[index-1]
     }
+    return LEVEL_LIST[index - 1]
   }
 
   startSession(response) {
