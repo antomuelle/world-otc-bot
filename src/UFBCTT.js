@@ -200,13 +200,14 @@ export default class UFBCTT {
       url: MEAL_TODAY,
       method: 'post'
     })
+    if (!data.data) return 0
     return data.data.currenttime - data.data.releasetime
   }
 
   async startMing() {
     const passed_time = await this.getTime()
     const amount = Number(this.#session.balance.amount)
-    if (passed_time >= 7200) {
+    if (passed_time === 0) {
       const response = await this.#_axios({
         url: START_MING,
         method: 'post',
