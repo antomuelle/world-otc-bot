@@ -6,6 +6,8 @@ const GET_BALANCE = 'user/getBalance'
 const START_MING = 'meal/startMing'
 const MEAL_TODAY = 'meal/today'
 
+const HOUR = 60 * 60
+
 const LEVEL_LIST = [
   {
     "id": 1,
@@ -214,9 +216,10 @@ export default class UFBCTT {
         data: { id: this.getLevel(amount).id }
       })
       console.log('Ming:', response.data)
+      this.runTimer(HOUR * 2)
     }
     else {
-      this.runTimer(7200 - passed_time)
+      this.runTimer((HOUR * 2) - passed_time)
     }
   }
 

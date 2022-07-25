@@ -1,7 +1,7 @@
 import MultiOtc from "./src/MultiOtc.js"
+import UFBCTT from "./src/UFBCTT.js"
 import fs from 'fs'
 import 'dotenv/config'
-import UFBCTT from "./src/UFBCTT.js"
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
