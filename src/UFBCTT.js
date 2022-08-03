@@ -159,9 +159,21 @@ export default class UFBCTT {
     })
   }
 
-  start() {
-
+  async start() {
+    if (this.#session.token)
+      await this.checkLogin()
+    else
+      await this.login()
   }
+
+  stop() {
+    if (this.#timer) {
+      clearTimeout(this.#timer)
+      this.#timer = null
+    }
+  }
+
+  get paused() { return !this.#timer }
 
   async login() {
     delete this.#headers.token
@@ -179,7 +191,7 @@ export default class UFBCTT {
     const data = await this.getBalance()
     if (data) {
       this.#session.balance = data
-      this.startMing()
+      await this.startMing()
     } else {
       console.log('No esta logueado, iniciando session...')
       this.login()
@@ -226,6 +238,7 @@ export default class UFBCTT {
   runTimer(time) {
     const total_time = (time + randInt(30, 60)) * 1000
     this.#timer = setTimeout(() => {
+      this.#timer = null
       this.checkLogin()
     }, total_time)
     console.log('timer in:' + (total_time / 1000 / 60) + ' minutos')

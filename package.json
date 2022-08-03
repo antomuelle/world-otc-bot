@@ -25,6 +25,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
+    "pug": "^3.0.2",
     "set-cookie-parser": "^2.5.0"
   }
 }

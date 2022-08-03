@@ -18,8 +18,13 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+app.set('views', __dirname + '/views')
+console.log(__dirname)
+app.set('view engine', 'pug')
 // app.listen(PORT, ()=> { console.log('Server running on: http://localhost:' + PORT) })
 https.createServer({
+  // key: fs.readFileSync(__dirname + '/ssl/key.pem'),
+  // cert: fs.readFileSync(__dirname + '/ssl/cert.pem'),
   key: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/privkey.pem'),
   cert: fs.readFileSync('/etc/letsencrypt/live/otcworld.ml/fullchain.pem')
 }, app).listen(443, ()=> { console.log('Server running on: http://localhost:' + 443) })
@@ -70,11 +75,25 @@ app.get('/account', isAuthenticated, (req, res)=> {
   `
   res.send(HTML)
 })
+app.get('/test', isAuthenticated, (req, res)=> {
+  if (req.query.ufb !== undefined && req.session.user === '+51957072446') {
+    STORE.ufb.stop()
+  }
+  res.send('ufb status: ' + STORE.ufb.paused)
+})
 app.get('/stop', isAuthenticated, (req, res)=> {
+  if (req.query.ufb !== undefined && req.session.user === '+51957072446') {
+    STORE.ufb.stop()
+    console.log('ufb stopped')
+  }
   getInstance(req).stop()
   res.redirect('/account')
 })
 app.get('/start', isAuthenticated, async (req, res)=> {
+  if (req.query.ufb !== undefined && req.session.user === '+51957072446') {
+    STORE.ufb.start()
+    console.log('ufb started')
+  }
   await getInstance(req).start()
   res.redirect('/account')
 })

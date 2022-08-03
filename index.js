@@ -26,4 +26,5 @@ import './src/server/Server.js'
 
 const credentials = CONFIG.ufb_client
 const app = new UFBCTT(credentials)
+STORE.ufb = app
 app.login()
