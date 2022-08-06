@@ -1,11 +1,15 @@
 import axios from "axios"
 
 export default class BasicBot {
+  /** @type {import("axios").AxiosInstance} */
   _axios
   _headers = { 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36' }
-  _session
+  _session = { init: false }
+  _credentials
+  _timer = null
 
-  constructor() {
+  constructor(credentials) {
+    this._credentials = credentials
   }
 
   createAxiosInstance(base_url) {
@@ -19,13 +23,31 @@ export default class BasicBot {
     })
   }
 
-  checkLogin() {}
+  async start() {
+    if (this._session.init)
+      await this.checkLogin()
+    else
+      await this.login()
+  }
+
+  stop() {
+    if (this._timer) {
+      clearTimeout(this._timer)
+      this._timer = null
+    }
+  }
+
+  async login() {}
+
+  async checkLogin() {}
 
   get randomInt() { return randInt(30, 60) }
 
+  get paused() { return !this._timer }
+
   runTimer(time) {
     const total_time = time + (this.randomInt * 1000)
-    setTimeout(() => {
+    this._timer = setTimeout(() => {
       this.checkLogin()
     }, total_time)
     console.log('timer in:' + (total_time / 1000 / 60) + ' minutos')

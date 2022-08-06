@@ -1,5 +1,6 @@
 import MultiOtc from "./src/MultiOtc.js"
 import UFBCTT from "./src/UFBCTT.js"
+import CateWork from "./src/CateWork.js"
 import fs from 'fs'
 import 'dotenv/config'
 
@@ -28,3 +29,7 @@ const credentials = CONFIG.ufb_client
 const app = new UFBCTT(credentials)
 STORE.ufb = app
 app.login()
+
+const user_cate = {correo: 'mguzman.muelle@gmail.com', pass: 's0nsam0sha'}
+const cate = new CateWork(user_cate)
+cate.login()
