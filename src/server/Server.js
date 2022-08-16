@@ -46,7 +46,7 @@ app.post('/login', (req, res)=> {
   if (!req.body) { res.sendStatus(404); res.end('No body'); return }
   if (!req.body.mobile || !req.body.password) { res.sendStatus(401); res.end('No all parameters'); return }
   const { mobile, password } = req.body
-  const data = STORE[mobile]
+  const data = STORE.world_otc[mobile]
   if (!data) { res.sendStatus(401); res.end(); return }
   if (data.password !== password) { res.sendStatus(401); res.end(); return }
 
@@ -113,4 +113,4 @@ function isAuthenticated(req, res, next) {
   if (req.session.user) next()
   else res.redirect('/login')
 }
-function getInstance(request) { return STORE[request.session.user].instance }
+function getInstance(request) { return STORE.world_otc[request.session.user].instance }

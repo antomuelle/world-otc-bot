@@ -146,8 +146,9 @@ export default class UFBCTT {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36'
   }
   
-  constructor(credentials) {
-    this.#credentials = credentials
+  constructor(key, data) {
+    this.#credentials = { account: key, password: data.password }
+    data.instance = this
     
     this.#_axios = axios.create({
       baseURL: BASE_URL,
