@@ -1,4 +1,3 @@
-import MultiOtc from "./src/MultiOtc.js"
 import UFBCT from "./src/UFBCT.js"
 import fs from 'fs'
 import 'dotenv/config'
@@ -16,13 +15,7 @@ global.randInt = function(min, max) { return Math.floor(Math.random() * (max - m
 
 const CONFIG = JSON.parse(fs.readFileSync('./config.json'))
 global.STORE = CONFIG.store
-
-const world_otc = CONFIG.store.world_otc
-for (const key in world_otc) {
-  if (world_otc.hasOwnProperty(key)) {
-    ( new MultiOtc(key, world_otc[key]) ).login()
-  }
-}
+/*********** start from here **********/
 
 const ufbc = CONFIG.store.ufbc
 for (const key in ufbc) {
@@ -36,7 +29,14 @@ for (const key in popts) {
     ( new UFBCT(key, popts[key], 'https://api.popts.vip/api/') ).start()
 }
 
-/* const publi_extra = CONFIG.store.publi_extra
+/* const world_otc = CONFIG.store.world_otc
+for (const key in world_otc) {
+  if (world_otc.hasOwnProperty(key)) {
+    ( new MultiOtc(key, world_otc[key]) ).login()
+  }
+}
+
+const publi_extra = CONFIG.store.publi_extra
 for (const key in publi_extra) {
   if (publi_extra.hasOwnProperty(key))
     ( new PubliExtra(key, publi_extra[key]) ).start()
