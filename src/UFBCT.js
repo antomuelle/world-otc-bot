@@ -131,7 +131,7 @@ const LEVEL_LIST = [
   }
 ]
 
-export default class UFBCTT {
+export default class UFBCT {
   #_axios
   #timer = null
   #credentials
@@ -146,12 +146,12 @@ export default class UFBCTT {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36'
   }
   
-  constructor(key, data) {
+  constructor(key, data, base_url = BASE_URL) {
     this.#credentials = { account: key, password: data.password }
     data.instance = this
     
     this.#_axios = axios.create({
-      baseURL: BASE_URL,
+      baseURL: base_url,
       withCredentials: true,
     })
     this.#_axios.interceptors.request.use( (config)=> {
@@ -177,15 +177,21 @@ export default class UFBCTT {
   get paused() { return !this.#timer }
 
   async login() {
-    delete this.#headers.token
-    const response = await this.#_axios({
-      url: LOGIN_URL,
-      method: 'post',
-      data: this.#credentials
-    })
+    try {
+      delete this.#headers.token
+      const response = await this.#_axios({
+        url: LOGIN_URL,
+        method: 'post',
+        data: this.#credentials
+      })
 
-    this.startSession(response)
-    this.checkLogin()
+      this.startSession(response)
+      this.checkLogin()
+    } catch (error) {
+      console.log('no se puede iniciar session, quizas la plataforma murio?')
+      this.runTimer(HOUR)
+    }
+    
   }
 
   async checkLogin() {
@@ -200,14 +206,14 @@ export default class UFBCTT {
   }
 
   async getBalance() {
-    const { data } = await this.#_axios({
-      url: GET_BALANCE,
-      method: 'post'
-    })
-    if (data.code && data.code === 1)
-      return data.data
-    else
-      return null
+    try {
+      const { data } = await this.#_axios({
+        url: GET_BALANCE,
+        method: 'post'
+      })
+      return (data.code && data.code === 1) ? data.data : null
+    }
+    catch (_) { return null }
   }
 
   async getTime() {

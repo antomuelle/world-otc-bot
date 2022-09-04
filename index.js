@@ -1,6 +1,5 @@
 import MultiOtc from "./src/MultiOtc.js"
-import UFBCTT from "./src/UFBCTT.js"
-import PubliExtra from "./src/PubliExtra.js"
+import UFBCT from "./src/UFBCT.js"
 import fs from 'fs'
 import 'dotenv/config'
 
@@ -28,13 +27,19 @@ for (const key in world_otc) {
 const ufbc = CONFIG.store.ufbc
 for (const key in ufbc) {
   if (ufbc.hasOwnProperty(key))
-    ( new UFBCTT(key, ufbc[key]) ).start()
+    ( new UFBCT(key, ufbc[key]) ).start()
 }
 
-const publi_extra = CONFIG.store.publi_extra
+const popts = CONFIG.store.popts
+for (const key in popts) {
+  if (popts.hasOwnProperty(key))
+    ( new UFBCT(key, popts[key], 'https://api.popts.vip/api/') ).start()
+}
+
+/* const publi_extra = CONFIG.store.publi_extra
 for (const key in publi_extra) {
   if (publi_extra.hasOwnProperty(key))
     ( new PubliExtra(key, publi_extra[key]) ).start()
-}
+} */
 
 import './src/server/Server.js'
