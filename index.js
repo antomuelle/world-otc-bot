@@ -1,4 +1,5 @@
 import UFBCT from "./src/UFBCT.js"
+import GoldenDeer from "./src/GoldenDeer.js"
 import fs from 'fs'
 import 'dotenv/config'
 
@@ -27,6 +28,11 @@ const popts = CONFIG.store.popts
 for (const key in popts) {
   if (popts.hasOwnProperty(key))
     ( new UFBCT(key, popts[key], 'https://api.popts.vip/api/') ).start()
+}
+
+const golden_deer = CONFIG.store.golden_deer
+for (const obj of golden_deer) {
+  ( new GoldenDeer(obj).start() )
 }
 
 /* const world_otc = CONFIG.store.world_otc

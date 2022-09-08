@@ -12,6 +12,11 @@ export default class BasicBot {
     this._credentials = credentials
   }
 
+  setBaseHeaders(base_url) {
+    this._headers.origin = base_url.substring(0, base_url.length - 1)
+    this._headers.referer = base_url
+  }
+
   createAxiosInstance(base_url) {
     this._axios = axios.create({
       baseURL: base_url,

@@ -35,7 +35,7 @@ export default class PubliExtra extends BasicBot {
     catch (error) {
       console.log('no se puede iniciar session, quizas la plataforma murio?')
       this.runTimer(HOUR)
-    } 
+    }
   }
 
   async purchase() {

@@ -1,9 +1,5 @@
-import axios from 'axios'
 import 'dotenv/config'
-import Backend from './src/server/Backend.js'
-import PubliExtra from "./src/PubliExtra.js"
-import fs from 'fs'
-import 'dotenv/config'
+import GoldenDeer from './src/GoldenDeer.js'
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -18,18 +14,26 @@ global.randInt = function(min, max) { return Math.floor(Math.random() * (max - m
 
 // new Backend()
 
-/* axios.get('https://publiextra.com/a/tareas', { maxRedirects: 0})
-  .then( response=> {
-    console.log(response)
-  }).catch(error=> {
-    console.log(error)
-  }) */
+const golden = new GoldenDeer({username: '4141620913', password: '0412Yuli'})
+golden.start()
 
-  const CONFIG = JSON.parse(fs.readFileSync('./config.json'))
-  global.STORE = CONFIG.store
+import dayjs from "dayjs"
+import utc from 'dayjs/plugin/utc.js'
+import timezone from 'dayjs/plugin/timezone.js'
+import customParseFormat from 'dayjs/plugin/customParseFormat.js'
 
-  const publi_extra = CONFIG.store.publi_extra
-for (const key in publi_extra) {
-  if (publi_extra.hasOwnProperty(key))
-    ( new PubliExtra(key, publi_extra[key]) ).start()
-}
+const FORMAT = 'MM-DD HH:mm'
+const TIME_ZONE = 'America/Caracas'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.extend(customParseFormat)
+
+const start = dayjs(1662670959000)
+const end = dayjs(1662681759000)
+//console.log(start.format(FORMAT), end.format(FORMAT))
+
+const now = dayjs()
+//const after = dayjs.tz(1662681759000, FORMAT, TIME_ZONE)
+const after = dayjs(1662681759000)
+console.log(after.diff(now) / 1000 / 60)
