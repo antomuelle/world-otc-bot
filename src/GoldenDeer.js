@@ -26,6 +26,8 @@ export default class GoldenDeer extends BasicBot {
     }
     super(new URLSearchParams(credentials))
 
+    this._session.user_log = credentials.username
+
     this._headers = {
       ...this._headers,
       'sec-ch-ua': '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
@@ -44,11 +46,14 @@ export default class GoldenDeer extends BasicBot {
         method: 'post',
         data: this._credentials
       })
-      this.startSession(response)
-      this.checkLogin()
+      if (response.data.code === 200) {
+        this.startSession(response)
+        this.checkLogin()
+      }
+      this.log(response.data.msg)
     }
     catch (error) {
-      console.log('no se puede iniciar session, quizas la plataforma murio?')
+      this.log('error > 400; no se puede iniciar session, quizas la plataforma murio?')
       this.runTimer(HOUR)
     }
   }
@@ -133,7 +138,5 @@ export default class GoldenDeer extends BasicBot {
       this._headers.authorization = 'Bearer ' + response.data.data
     }
   }
-
-  log(text) { console.log(`GoldenDeer> ${this._credentials.get('username')}: ${text}`) }
 
 }

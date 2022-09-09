@@ -7,6 +7,7 @@ const START_MING = 'meal/startMing'
 const MEAL_TODAY = 'meal/today'
 
 const HOUR = 60 * 60
+const MIN_DEAL = 5
 
 const LEVEL_LIST = [
   {
@@ -198,7 +199,11 @@ export default class UFBCT {
     const data = await this.getBalance()
     if (data) {
       this.#session.balance = data
-      await this.startMing()
+      if (this.#session.balance.amount < MIN_DEAL) {
+        console.log('balance insuficiente, intentaremos despues de un rato')
+        this.runTimer(HOUR)
+      } else
+        await this.startMing()
     } else {
       console.log('No esta logueado, iniciando session...')
       this.login()

@@ -4,7 +4,7 @@ export default class BasicBot {
   /** @type {import("axios").AxiosInstance} */
   _axios
   _headers = { 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36' }
-  _session = { init: false }
+  _session = { init: false, user_log: '' }
   _credentials
   _timer = null
 
@@ -51,11 +51,15 @@ export default class BasicBot {
   get paused() { return !this._timer }
 
   runTimer(time) {
-    const total_time = time + (this.randomInt * 1000)
+    let total_time = time + (this.randomInt * 1000)
     this._timer = setTimeout(() => {
       this.checkLogin()
     }, total_time)
-    console.log('timer in:' + (total_time / 1000 / 60) + ' minutos')
+    total_time = (total_time / 1000)
+    const h = parseInt(total_time / 3600)
+    const m = parseInt((total_time % 3600) / 60)
+    const s = parseInt(total_time % 60)
+    this.log(`Timer in: ${h}:${ m<10?'0'+m:m }:${ s<10?'0'+s:s }`)
   }
 
   async request(config, intent = 1) {
@@ -71,5 +75,7 @@ export default class BasicBot {
       }
     }
   }
+
+  log(text) { console.log(`${this.constructor.name} > ${this._session.user_log}: ${text}`) }
 
 }

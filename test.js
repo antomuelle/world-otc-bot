@@ -15,9 +15,9 @@ global.randInt = function(min, max) { return Math.floor(Math.random() * (max - m
 // new Backend()
 
 const golden = new GoldenDeer({username: '4141620913', password: '0412Yuli'})
-golden.start()
+//golden.login()
 
-import dayjs from "dayjs"
+/* import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc.js'
 import timezone from 'dayjs/plugin/timezone.js'
 import customParseFormat from 'dayjs/plugin/customParseFormat.js'
@@ -36,4 +36,4 @@ const end = dayjs(1662681759000)
 const now = dayjs()
 //const after = dayjs.tz(1662681759000, FORMAT, TIME_ZONE)
 const after = dayjs(1662681759000)
-console.log(after.diff(now) / 1000 / 60)
+console.log(after.diff(now) / 1000 / 60) */
