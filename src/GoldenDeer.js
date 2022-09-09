@@ -49,11 +49,12 @@ export default class GoldenDeer extends BasicBot {
       if (response.data.code === 200) {
         this.startSession(response)
         this.checkLogin()
+        this.log(response.data.msg)
       }
-      this.log(response.data.msg)
+      else this.logFile('error en login, msg: ' +  response.data.msg)
     }
     catch (error) {
-      this.log('error > 400; no se puede iniciar session, quizas la plataforma murio?')
+      this.logFile('error >= 400 quizas la plataforma murio?')
       this.runTimer(HOUR)
     }
   }
@@ -62,14 +63,13 @@ export default class GoldenDeer extends BasicBot {
     try {
       let { data } = await this._axios.get('user/getDealInfo')
       if (data.code > 500 || data.msg === 'error') {
-        this.log('No esta logueado, iniciando session...')
+        this.logFile('No esta logueado, iniciando session...')
         this.login()
       } else {
         const userinfo = data.data.userinfo
         const total_balance = Number(userinfo.total_balance)
         if (total_balance < userinfo.deal_min_balance) {
-          this.log('El usuario no tiene fondos suficientes')
-          this.log('revision dentro de 1 hora')
+          this.logFile('El usuario no tiene fondos suficientes, revision dentro de 1 hora')
           this.runTimer(HOUR)
           return
         }
@@ -79,14 +79,14 @@ export default class GoldenDeer extends BasicBot {
         this.runDeal()
       }
     } catch (error) {
-      console.log(error)
+      this.logFile(error)
     }
   }
 
   async runDeal() {
     const balance = this._session.balance
     if (balance < this._session.deal_min_balance) {
-      this.log('balance insuficiente');
+      this.logFile('balance insuficiente');
       this.decideFromLogs()
       return
     }
@@ -124,12 +124,12 @@ export default class GoldenDeer extends BasicBot {
       const now = dayjs().tz('UTC')
       const after = dayjs.tz(deal_log.end_time * 1000, FORMAT, TIME_ZONE)
       const time = after.diff(now)
-      this.log('iniciando timer desde los logs: ' + time / 1000 / 60)
+      this.log('iniciando timer desde los logs')
       this.runTimer(time)
     }
   }
   
-  get randomInt() { return randInt(30, 60) }
+  get randomInt() { return randInt(60, 90) }
 
   startSession(response) {
     this._session.init = true

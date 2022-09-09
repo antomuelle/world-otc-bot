@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import GoldenDeer from './src/GoldenDeer.js'
+import fs from 'fs'
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -13,6 +14,8 @@ global._log = function(text) { console.log(text) }
 global.randInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
 
 // new Backend()
+fs.appendFile('test.txt', 'nuevo texto', ()=> {});
+
 
 /* import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc.js'

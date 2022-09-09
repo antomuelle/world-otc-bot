@@ -1,4 +1,6 @@
 import axios from "axios"
+import fs from 'fs'
+import dayjs from "dayjs"
 
 export default class BasicBot {
   /** @type {import("axios").AxiosInstance} */
@@ -55,11 +57,7 @@ export default class BasicBot {
     this._timer = setTimeout(() => {
       this.checkLogin()
     }, total_time)
-    total_time = (total_time / 1000)
-    const h = parseInt(total_time / 3600)
-    const m = parseInt((total_time % 3600) / 60)
-    const s = parseInt(total_time % 60)
-    this.log(`Timer in: ${h}:${ m<10?'0'+m:m }:${ s<10?'0'+s:s }`)
+    this.logFile('Timer in: ' + this.parseTime(total_time))
   }
 
   async request(config, intent = 1) {
@@ -76,6 +74,23 @@ export default class BasicBot {
     }
   }
 
+  parseTime(time) {
+    time = parseInt(time / 1000)
+    const h = parseInt(time / 3600)
+    const m = parseInt((time % 3600) / 60)
+    const s = parseInt(time % 60)
+    return `${ h<10?'0'+h:h }:${ m<10?'0'+m:m }:${ s<10?'0'+s:s }`
+  }
+
   log(text) { console.log(`${this.constructor.name} > ${this._session.user_log}: ${text}`) }
+
+  logFile(text) {
+    this.log(text)
+    let stamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    stamp = `${stamp} ${this.constructor.name} > ${this._session.user_log}: ${text}`
+    fs.appendFile('../logging.txt', stamp, this.void)
+  }
+
+  void() {}
 
 }
