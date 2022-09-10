@@ -63,10 +63,7 @@ export default class GoldenDeer extends BasicBot {
     let data
     try {
       data = (await this._axios.get('user/getDealInfo')).data
-      if (data.code >= 400 || data.msg === 'error') {
-        this.logFile('No esta logueado, iniciando session...')
-        this.login()
-      } else {
+      if (data.code === 200 || data.data) {
         const userinfo = data.data.userinfo
         const total_balance = Number(userinfo.total_balance)
         if (total_balance < userinfo.deal_min_balance) {
@@ -79,10 +76,12 @@ export default class GoldenDeer extends BasicBot {
         this.log('comprobacion de login correcta, yendo a runDeal')
         this.runDeal()
       }
+      else {
+        this.logFile('Token invalido, iniciando session...')
+        this.login()
+      }
     } catch (error) {
-      console.log(data)
-      this.logFile(error)
-      this.logFile(JSON.stringify(data))
+      this.logFile(error +' | '+ JSON.stringify(data))
     }
   }
 
