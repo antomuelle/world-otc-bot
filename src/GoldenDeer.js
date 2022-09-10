@@ -60,8 +60,9 @@ export default class GoldenDeer extends BasicBot {
   }
 
   async checkLogin() {
+    let data
     try {
-      let { data } = await this._axios.get('user/getDealInfo')
+      data = (await this._axios.get('user/getDealInfo')).data
       if (data.code >= 400 || data.msg === 'error') {
         this.logFile('No esta logueado, iniciando session...')
         this.login()
@@ -79,7 +80,9 @@ export default class GoldenDeer extends BasicBot {
         this.runDeal()
       }
     } catch (error) {
+      console.log(data)
       this.logFile(error)
+      this.logFile(JSON.stringify(data))
     }
   }
 
