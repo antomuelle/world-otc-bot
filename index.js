@@ -1,5 +1,6 @@
 import UFBCT from "./src/UFBCT.js"
 import GoldenDeer from "./src/GoldenDeer.js"
+import PamoMined from './src/PamoMined.js'
 import fs from 'fs'
 import 'dotenv/config'
 
@@ -24,15 +25,15 @@ for (const key in ufbc) {
     ( new UFBCT(key, ufbc[key]) ).start()
 }
 
-const popts = CONFIG.store.popts
-for (const key in popts) {
-  if (popts.hasOwnProperty(key))
-    ( new UFBCT(key, popts[key], 'https://api.popts.vip/api/') ).start()
-}
-
 const golden_deer = CONFIG.store.golden_deer
 for (const obj of golden_deer) {
   ( new GoldenDeer(obj).start() )
+}
+
+const pamo_mined = CONFIG.store.pamo_mined
+for (const key in pamo_mined) {
+  if (pamo_mined.hasOwnProperty(key))
+    ( new PamoMined(key, pamo_mined[key]) ).start()
 }
 
 /* const world_otc = CONFIG.store.world_otc
@@ -40,6 +41,12 @@ for (const key in world_otc) {
   if (world_otc.hasOwnProperty(key)) {
     ( new MultiOtc(key, world_otc[key]) ).login()
   }
+}
+
+const popts = CONFIG.store.popts
+for (const key in popts) {
+  if (popts.hasOwnProperty(key))
+    ( new UFBCT(key, popts[key], 'https://api.popts.vip/api/') ).start()
 }
 
 const publi_extra = CONFIG.store.publi_extra
