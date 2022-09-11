@@ -6,7 +6,7 @@ const BASE_URL = 'https://pamomined.com/'
 const HOUR = 60 * 60 * 1000
 const FIND_TEXT = "anadir_renta('"
 
-export default class PubliExtra extends BasicBot {
+export default class PamoMined extends BasicBot {
 
   constructor(key, data) {
     let credentials = {
