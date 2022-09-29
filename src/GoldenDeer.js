@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 import utc from 'dayjs/plugin/utc.js'
 import timezone from 'dayjs/plugin/timezone.js'
 import customParseFormat from 'dayjs/plugin/customParseFormat.js'
-import md5 from "blueimp-md5";
+import md5 from "blueimp-md5"
 
 const BASE_URL = 'https://api.goldendeer.live/buyer/'
 const HOUR = 1000 * 60 * 60

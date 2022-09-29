@@ -248,7 +248,7 @@ export default class UFBCT {
   }
 
   runTimer(time) {
-    const total_time = (time + randInt(30, 60)) * 1000
+    const total_time = (time + randInt(10, 30)) * 1000
     this.#timer = setTimeout(() => {
       this.#timer = null
       this.checkLogin()
