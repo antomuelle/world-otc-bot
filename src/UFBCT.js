@@ -3,8 +3,8 @@ import axios from "axios"
 const BASE_URL = 'https://api.ufbctt.life/api/'
 const LOGIN_URL = 'user/login'
 const GET_BALANCE = 'user/getBalance'
-const START_MING = 'meal/startMing'
-const MEAL_TODAY = 'meal/today'
+const START_MING = 'meal/startMings'
+const MEAL_TODAY = 'meal/todays'
 
 const HOUR = 60 * 60
 const MIN_DEAL = 5
@@ -189,7 +189,7 @@ export default class UFBCT {
       this.startSession(response)
       this.checkLogin()
     } catch (error) {
-      console.log('no se puede iniciar session, quizas la plataforma murio?')
+      this.log('no se puede iniciar session, quizas la plataforma murio?')
       this.runTimer(HOUR)
     }
     
@@ -199,13 +199,13 @@ export default class UFBCT {
     const data = await this.getBalance()
     if (data) {
       this.#session.balance = data
-      if (this.#session.balance.amount < MIN_DEAL) {
-        console.log('balance insuficiente, intentaremos despues de un rato')
+      if (Number(data.amount) < MIN_DEAL) {
+        this.log('balance insuficiente, intentaremos despues de un rato')
         this.runTimer(HOUR)
       } else
         await this.startMing()
     } else {
-      console.log('No esta logueado, iniciando session...')
+      this.log('No esta logueado, iniciando session...')
       this.login()
     }
   }
@@ -237,13 +237,14 @@ export default class UFBCT {
       const response = await this.#_axios({
         url: START_MING,
         method: 'post',
-        data: { id: this.getLevel(amount).id }
+        data: { id: 1 }
+        //data: { id: this.getLevel(amount).id }
       })
-      console.log('Ming:', response.data)
-      this.runTimer(HOUR * 2)
+      this.log('Ming:', response.data)
+      this.runTimer(HOUR * 4)
     }
     else {
-      this.runTimer((HOUR * 2) - passed_time)
+      this.runTimer((HOUR * 4) - passed_time)
     }
   }
 
@@ -253,7 +254,15 @@ export default class UFBCT {
       this.#timer = null
       this.checkLogin()
     }, total_time)
-    console.log('timer in:' + (total_time / 1000 / 60) + ' minutos')
+    this.log('Timer in:' + this.parseTime(total_time))
+  }
+
+  parseTime(time) {
+    time = parseInt(time / 1000)
+    const h = parseInt(time / 3600)
+    const m = parseInt((time % 3600) / 60)
+    const s = parseInt(time % 60)
+    return `${ h<10?'0'+h:h }:${ m<10?'0'+m:m }:${ s<10?'0'+s:s }`
   }
 
   getLevel(amount) {
@@ -274,5 +283,7 @@ export default class UFBCT {
       this.#headers.token = this.#session.token
     }
   }
+
+  log(text) { console.log(`UFBC > ${this.#credentials.account}: ${text}`)}
 
 }
