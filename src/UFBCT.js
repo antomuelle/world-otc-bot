@@ -262,7 +262,7 @@ export default class UFBCT {
       this.#timer = null
       this.checkLogin()
     }, total_time)
-    this.log('Timer in:' + this.parseTime(total_time))
+    this.log('Timer in: ' + this.parseTime(total_time))
   }
 
   parseTime(time) {
