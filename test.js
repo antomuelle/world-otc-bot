@@ -1,6 +1,6 @@
 import 'dotenv/config'
-import md5 from "blueimp-md5"
 import fs from 'fs'
+import UFBCT from './src/UFBCT.js'
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -16,6 +16,7 @@ global.randInt = function(min, max) { return Math.floor(Math.random() * (max - m
 const CONFIG = JSON.parse(fs.readFileSync('./config.json'))
 global.STORE = CONFIG.store
 /*********** start from here **********/
-// new Backend()
 
-console.log(md5('NjkmDMZ1M7iZEHjlHOd7T26XgkdiMI' + '19Mrkts11_'))
+const ufbc = new UFBCT("928526604", { "password": "Bambam28", "instance": null })
+await ufbc.login()
+ufbc.getBalance()

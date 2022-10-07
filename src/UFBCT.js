@@ -185,9 +185,17 @@ export default class UFBCT {
         method: 'post',
         data: this.#credentials
       })
+      const { data } = response
+      if (data.code && data.code === 1) {
+        this.startSession(response)
+        this.checkLogin()
+      } else {
+        if (data.msg && data.msg !== '')
+          this.log('error login: ' + data.msg)
+        else
+          this.log('error desconocido en el login')
+      }
 
-      this.startSession(response)
-      this.checkLogin()
     } catch (error) {
       this.log('no se puede iniciar session, quizas la plataforma murio?')
       this.runTimer(HOUR)
