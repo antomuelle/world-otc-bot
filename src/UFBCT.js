@@ -204,14 +204,22 @@ export default class UFBCT {
   }
 
   async checkLogin() {
+    const passed_time = await this.getTime()
+    if (passed_time > 0) {
+      this.runTimer((HOUR * 4) - passed_time)
+      return
+    }
+
     const data = await this.getBalance()
     if (data) {
       this.#session.balance = data
       if (Number(data.amount) < MIN_DEAL) {
         this.log('balance insuficiente, intentaremos despues de un rato')
         this.runTimer(HOUR)
-      } else
+      } else {
+        this.#session.passed_time = passed_time
         await this.startMing()
+      }
     } else {
       this.log('No esta logueado, iniciando session...')
       this.login()
@@ -239,8 +247,8 @@ export default class UFBCT {
   }
 
   async startMing() {
-    const passed_time = await this.getTime()
-    const amount = Number(this.#session.balance.amount)
+    const passed_time = this.#session.passed_time
+    // const amount = Number(this.#session.balance.amount)
     if (passed_time === 0) {
       const response = await this.#_axios({
         url: START_MING,
