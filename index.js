@@ -1,6 +1,7 @@
 import UFBCT from "./src/UFBCT.js"
 import fs from 'fs'
 import 'dotenv/config'
+import UFTP from "./src/UFTP.js"
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -22,6 +23,8 @@ for (const key in ufbc) {
   if (ufbc.hasOwnProperty(key))
     ( new UFBCT(key, ufbc[key]) ).start()
 }
+
+(new UFTP()).checkLogin()
 
 /* const golden_deer = CONFIG.store.golden_deer
 for (const obj of golden_deer) {
