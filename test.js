@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import fs from 'fs'
 import UFBCT from './src/UFBCT.js'
+import UFTP from './src/UFTP.js'
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -17,6 +18,5 @@ const CONFIG = JSON.parse(fs.readFileSync('./config.json'))
 global.STORE = CONFIG.store
 /*********** start from here **********/
 
-const ufbc = new UFBCT("928526604", { "password": "Bambam28", "instance": null })
-await ufbc.login()
-ufbc.getBalance()
+const uftp = new UFTP()
+uftp.checkLogin()

@@ -204,12 +204,14 @@ export default class UFBCT {
   }
 
   async checkLogin() {
+    // si ha pasado algun tiempo entonces seteo el timer y salgo
     const passed_time = await this.getTime()
     if (passed_time > 0) {
       this.runTimer((HOUR * 4) - passed_time)
       return
     }
 
+    // si no tiene un timer entonces reviso su balance y activo el Ming si aplica
     const data = await this.getBalance()
     if (data) {
       this.#session.balance = data

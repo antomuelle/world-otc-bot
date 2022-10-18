@@ -5,7 +5,7 @@ import dayjs from "dayjs"
 export default class BasicBot {
   /** @type {import("axios").AxiosInstance} */
   _axios
-  _headers = { 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Mobile Safari/537.36' }
+  _headers = { 'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36' }
   _session = { init: false, user_log: '' }
   _credentials
   _timer = null
