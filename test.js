@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import fs from 'fs'
-import UFBCT from './src/UFBCT.js'
 import UFTP from './src/UFTP.js'
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
