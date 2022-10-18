@@ -88,7 +88,7 @@ export default class BasicBot {
     this.log(text)
     let stamp = dayjs().format('YYYY-MM-DD HH:mm:ss')
     stamp = `${stamp} ${this.constructor.name} > ${this._session.user_log}: ${text}\r\n`
-    fs.appendFile('./logging.log', stamp, this.void)
+    fs.appendFile('../logging.log', stamp, this.void)
   }
 
   void() {}

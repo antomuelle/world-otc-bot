@@ -2,9 +2,10 @@ import Account from "../models/Account.js";
 import Platform from "../models/Platform.js";
 import User from  "../models/User.js";
 
-User.belongsToMany(Platform, { through: Account })
-Platform.belongsToMany(User, { through: Account })
+User.belongsToMany(Platform, { through: { model: Account, unique: false }, foreignKey: 'user_id', otherKey: 'platform_id', unique: false })
+Platform.belongsToMany(User, { through: { model: Account, unique: false }, foreignKey: 'platform_id', otherKey: 'user_id', unique: false })
+/* User.belongsToMany(Platform, { through: { model: Account, unique: false } })
+Platform.belongsToMany(User, { through: { model: Account, unique: false } }) */
 
-// import { sequelize as conn } from "./sequelize.js";
-// export const sequelize = conn
-export { sequelize } from './sequelize.js'
+// export { sequelize } from './sequelize.js'
+export const sequelize = User.sequelize

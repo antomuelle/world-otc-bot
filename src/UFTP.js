@@ -50,13 +50,13 @@ export default class UFTP extends BasicBot {
           }
         }
         else {
-          this.log('balance insuficiente, intentare en 2 horas')
+          this.logFile('balance insuficiente, intentare en 2 horas')
           this.runTimer(HOUR * 2)
         }
       }
     }
     catch (err) {
-      this.log(err.message || err)
+      this.logFile(err.message || err)
     }
   }
 
@@ -78,9 +78,9 @@ export default class UFTP extends BasicBot {
         this.runTimer(HOUR * 4)
       }
       else
-        this.log(data)
+        this.logFile(data)
     }
-    catch (err) { this.log(err.message || err) }
+    catch (err) { this.logFile(err.message || err) }
   }
 
   get randomInt() { return randInt(15, 40) }
