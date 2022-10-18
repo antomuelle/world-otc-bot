@@ -7,7 +7,7 @@ const START_MINE = 'shop/pair'
 const RUSH_INFO = 'shop/getShopList'
 const PREVIEW_MINE = 'shop/showShop'
 
-const TOKEN = '1942ec92-917c-4719-ae04-f06c0e1f5a5a'
+const TOKEN = '4b2b64ca-7be6-4989-8efe-31d44742bbd1'
 const HOUR = 60 * 60 * 1000
 
 export default class UFTP extends BasicBot {
@@ -56,7 +56,7 @@ export default class UFTP extends BasicBot {
       }
     }
     catch (err) {
-      console.log(err)
+      this.log(err.message || err)
     }
   }
 
@@ -77,9 +77,10 @@ export default class UFTP extends BasicBot {
         this.log('rush success, ganancia: ' + data.data.order_info.get_money)
         this.runTimer(HOUR * 4)
       }
-      console.log(data)
+      else
+        this.log(data)
     }
-    catch (err) { console.log(err) }
+    catch (err) { this.log(err.message || err) }
   }
 
   get randomInt() { return randInt(15, 40) }
