@@ -45,4 +45,8 @@ export default sequelize.define('Platform', {
     defaultValue: null
   }
 },
-{ tableName: 'platforms'})
+{
+  tableName: 'platforms',
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+})

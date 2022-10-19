@@ -51,4 +51,8 @@ export default sequelize.define('Account', {
     defaultValue: 0
   }
 },
-{ tableName: 'accounts' })
+{
+  tableName: 'accounts',
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+})

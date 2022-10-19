@@ -36,9 +36,9 @@ export default class UFTP extends BasicBot {
       })
       if (data.code && data.code === 1) {
         const balance = data.data.extend
-        if (Number(balance.money) >= 5)
+        if (Number(balance.money) >= 5) {
           this.startMiner()
-        else if (Number(balance.order_lock_money) > 0) {
+        } else if (Number(balance.order_lock_money) > 0) {
           let last_rush = data.data.list
           if (Array.isArray(last_rush) && last_rush.length > 0) {
             last_rush = last_rush[0]
@@ -48,12 +48,14 @@ export default class UFTP extends BasicBot {
             if (diff > 0)
               this.runTimer(diff)
           }
+          else { this.logFile('last_rush no es arrary o esta vacio: ' + data.data.list)}
         }
         else {
           this.logFile('balance insuficiente, intentare en 2 horas')
           this.runTimer(HOUR * 2)
         }
       }
+      else { this.logFile(data) }
     }
     catch (err) {
       this.logFile(err.message || err)
@@ -68,6 +70,8 @@ export default class UFTP extends BasicBot {
       })
       if (data.code && data.code <= 0)
         throw new Error(data.msg || 'error en PREVIEW_MINE')
+      else
+        this.logFile('preview ok, data: '+data)
 
       data = (await this._axios({
         url: START_MINE,

@@ -2,6 +2,8 @@ import UFBCT from "./src/UFBCT.js"
 import fs from 'fs'
 import 'dotenv/config'
 import UFTP from "./src/UFTP.js"
+import { fileURLToPath } from "url"
+import { dirname } from "path"
 
 Object.prototype.has = function(key) { return this.hasOwnProperty(key) }
 Object.prototype.ifHas = function(key, obj, opt_key = null) {
@@ -11,6 +13,8 @@ Object.prototype.ifHas = function(key, obj, opt_key = null) {
   }
   return false
 }
+global.__filename = fileURLToPath(import.meta.url);
+global.__dirname = dirname(__filename)
 global._log = function(text) { console.log(text) }
 global.randInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1) + min) }
 

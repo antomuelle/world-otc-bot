@@ -28,4 +28,8 @@ export default sequelize.define('User', {
     validate: { notEmpty: true }
   }
 },
-{ tableName: 'users' })
+{
+  tableName: 'users',
+  createdAt: 'created_at',
+  updatedAt: 'updated_at'
+})
