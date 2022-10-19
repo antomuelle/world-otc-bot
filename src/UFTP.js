@@ -39,23 +39,28 @@ export default class UFTP extends BasicBot {
         if (Number(balance.money) >= 5) {
           this.startMiner()
         } else if (Number(balance.order_lock_money) > 0) {
+          this.logFile('money lock')
           let last_rush = data.data.list
           if (Array.isArray(last_rush) && last_rush.length > 0) {
             last_rush = last_rush[0]
             const now = dayjs(Number(data.time + '000'))
             const end = dayjs(Number(last_rush.end_time + '000'))
             const diff = end.diff(now)
-            if (diff > 0)
+            if (diff > 0) {
               this.runTimer(diff)
+              this.logFile('seteando diferencia de tiempo')
+            }
+            else
+              this.logFile('diferencia negativa')
           }
-          else { this.logFile('last_rush no es arrary o esta vacio: ' + data.data.list)}
+          else { this.logFile('last_rush no es arrary o esta vacio: ' + JSON.stringify(data.data.list))}
         }
         else {
           this.logFile('balance insuficiente, intentare en 2 horas')
           this.runTimer(HOUR * 2)
         }
       }
-      else { this.logFile(data) }
+      else { this.logFile(JSON.stringify(data)) }
     }
     catch (err) {
       this.logFile(err.message || err)
@@ -77,14 +82,15 @@ export default class UFTP extends BasicBot {
         url: START_MINE,
         method: 'post'
       })).data
+
       if (data.code && data.code === 1) {
         this.log('rush success, ganancia: ' + data.data.order_info.get_money)
         this.runTimer(HOUR * 4)
       }
       else
-        this.logFile(data)
+        this.logFile(JSON.stringify(data))
     }
-    catch (err) { this.logFile(err.message || err) }
+    catch (err) { this.logFile(err.message || JSON.stringify(err)) }
   }
 
   get randomInt() { return randInt(15, 40) }
