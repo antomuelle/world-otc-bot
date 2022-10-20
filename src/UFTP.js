@@ -34,6 +34,7 @@ export default class UFTP extends BasicBot {
         url: RUSH_INFO,
         method: 'post',
       })
+
       if (data.code && data.code === 1) {
         const balance = data.data.extend
         if (Number(balance.money) >= 5) {
@@ -47,11 +48,13 @@ export default class UFTP extends BasicBot {
             const end = dayjs(Number(last_rush.end_time + '000'))
             const diff = end.diff(now)
             if (diff > 0) {
+              this.logFile('seteando timer para el rush')
               this.runTimer(diff)
-              this.logFile('seteando diferencia de tiempo')
             }
-            else
-              this.logFile('diferencia negativa')
+            else {
+              this.logFile('money lock pero con diferencia negativa, intentando en:')
+              this.runTimer(10000)
+            }
           }
           else { this.logFile('last_rush no es arrary o esta vacio: ' + JSON.stringify(data.data.list))}
         }
@@ -93,7 +96,7 @@ export default class UFTP extends BasicBot {
     catch (err) { this.logFile(err.message || JSON.stringify(err)) }
   }
 
-  get randomInt() { return randInt(15, 40) }
+  get randomInt() { return randInt(60, 80) }
 
 }
 
