@@ -1,9 +1,9 @@
-import { sequelize } from "../database/sequelize.js";
+import { connection } from "../database/connection.js";
 import { DataTypes } from 'sequelize'
 import User from "./User.js";
 import Platform from "./Platform.js";
 
-export default sequelize.define('Account', {
+export default connection.define('Account', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,

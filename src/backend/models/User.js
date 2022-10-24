@@ -1,7 +1,7 @@
-import { sequelize } from "../database/sequelize.js";
+import { connection } from "../database/connection.js";
 import { DataTypes } from 'sequelize'
 
-export default sequelize.define('User', {
+export default connection.define('User', {
   names: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -26,6 +26,11 @@ export default sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
     validate: { notEmpty: true }
+  },
+  type: {
+    type: DataTypes.TINYINT,
+    allowNull: false,
+    defaultValue: 0
   }
 },
 {

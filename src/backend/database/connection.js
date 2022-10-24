@@ -5,7 +5,7 @@ const db_user = 'root'
 const db_pass = 'd3bugp@ssword'
 const db_host = 'localhost'
 
-export const sequelize = new Sequelize(
+export const connection = new Sequelize(
   db_name,
   db_user,
   db_pass,

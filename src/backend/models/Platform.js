@@ -1,7 +1,7 @@
-import { sequelize } from "../database/sequelize.js";
+import { connection } from "../database/connection.js";
 import { DataTypes } from 'sequelize'
 
-export default sequelize.define('Platform', {
+export default connection.define('Platform', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,

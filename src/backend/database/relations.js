@@ -13,5 +13,5 @@ Platform.belongsToMany(User, {
   otherKey: 'user_id',
 })
 
-// export { sequelize } from './sequelize.js'
+// export { connection as sequelize } from './connection.js'
 export const sequelize = User.sequelize
