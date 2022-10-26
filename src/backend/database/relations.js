@@ -12,6 +12,10 @@ Platform.belongsToMany(User, {
   foreignKey: 'platform_id',
   otherKey: 'user_id',
 })
+User.hasMany(Account, { foreignKey: 'user_id' })
+Account.belongsTo(User, { foreignKey: 'user_id' })
+Platform.hasMany(Account, { foreignKey: 'platform_id' })
+Account.belongsTo(Platform, { foreignKey: 'platform_id' })
 
 // export { connection as sequelize } from './connection.js'
 export const sequelize = User.sequelize

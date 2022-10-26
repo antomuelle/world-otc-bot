@@ -7,7 +7,7 @@ const START_MINE = 'shop/pair'
 const RUSH_INFO = 'shop/getShopList'
 const PREVIEW_MINE = 'shop/showShop'
 
-const TOKEN = '5a6765bc-5fdd-40eb-8a8b-5c13797175a0'
+const TOKEN = 'e8074e1c-b6b8-498c-8a2c-8f748419631a'
 const HOUR = 60 * 60 * 1000
 
 export default class UFTP extends BasicBot {

@@ -17,9 +17,14 @@ router.get('/logout', authMiddleware, logout)
 // Safe group routes
 const proteced = Router()
 proteced.use(authMiddleware)
-proteced.get('/user/platform/all', AccountController.userPlatforms)
-proteced.get('/platform/all', AccountController.allPlatforms)
-proteced.post('/account/token', AccountController.updateToken)
+
+proteced.get('/platform/:code', AccountController.platforms)
+proteced.get('/user/platforms', AccountController.userPlatforms)
+proteced.get('/user/account/:code', AccountController.accountDetail)
+proteced.get('/user/accounts/:code', AccountController.userAccounts)
+proteced.post('/user/account/token', AccountController.updateToken)
+proteced.post('/user/account/new', AccountController.newAccount)
+proteced.post('/user/bot', AccountController.controlBot)
 
 router.use('/', proteced)
 export default router
